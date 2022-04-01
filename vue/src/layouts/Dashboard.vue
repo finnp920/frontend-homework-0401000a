@@ -2,10 +2,8 @@
   <div class="dashboard-wrap">
     <header />
     <div class="dashboard">
-      <gnb />
-      <router-view
-        name="area"
-      />
+      <gnb :list="gnbList" />
+      <router-view name="area" />
     </div>
   </div>
 </template>
@@ -15,7 +13,19 @@ import 'scss/layouts/dashboard.scss';
 export default {
   name: 'DashboardLayout',
   data() {
-    return {};
-  }
+    return {
+      gnbList: [],
+    };
+  },
+  created() {
+    this.getGnb();
+  },
+  methods: {
+    async getGnb() {
+      const res = await this.API.getGnb();
+      if (!res) return;
+      this.gnbList = res.data;
+    },
+  },
 };
 </script>
